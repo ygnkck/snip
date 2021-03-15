@@ -12,3 +12,13 @@ jQuery( document ).on('scroll', function(){
 	});
 </script>
 
+
+/*** jquery for mobile menu toggle ******/
+
+jQuery(document).ready(function($) {
+    jQuery("#mobilemenu").hide();
+    jQuery(".ms__menu-toggle").click(function() {
+        jQuery("#mobilemenu").slideToggle(500);
+		jQuery(".ms__mobile-menu").toggleClass('opened');
+    });
+});	
