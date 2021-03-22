@@ -22,6 +22,26 @@ if( function_exists('acf_add_options_page') ) {
 	
 }
 
+
+<---- or --->
+
+add_action('acf/init', 'cs_acf_op_init');
+function cs_acf_op_init() {
+
+    if( function_exists('acf_add_options_page') ) {
+
+        $option_page = acf_add_options_page(array(
+            'page_title'    => __('Etrux General Settings'),
+            'menu_title'    => __('Etrux Settings'),
+            'menu_slug'     => 'etrux-general-settings',
+            'capability'    => 'edit_posts',
+            'redirect'      => false
+        ));
+    }
+}
+
+
+
 /****** disable gutenberg ******/
 
 add_filter('use_block_editor_for_post_type', 'prefix_disable_gutenberg', 10, 2);
@@ -90,3 +110,4 @@ function the_breadcrumb() {
         echo '</div>';
     }
 }
+
