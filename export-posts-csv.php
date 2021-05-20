@@ -1,26 +1,27 @@
-/****** Add export button Boutiques **********/
 
 
-function admin_boutiques_export_button( $which ) {
+/****** Create button on post listing page admin ********/
+
+
+
+function admin_post_list_add_export_button( $which ) {
     global $typenow;
   
-    if ( 'boutiques' === $typenow && 'top' === $which ) {
+    if ( 'post' === $typenow && 'top' === $which ) {
         ?>
-        <input type="submit" name="export_boutique_details" class="button button-primary" value="<?php _e('Export Boutiques'); ?>" />
+        <input type="submit" name="export_all_posts" class="button button-primary" value="<?php _e('Export All Posts'); ?>" />
         <?php
     }
 }
  
-add_action( 'manage_posts_extra_tablenav', 'admin_boutiques_export_button', 20, 1 );
+add_action( 'manage_posts_extra_tablenav', 'admin_post_list_add_export_button', 20, 1 );
 
 
-/*********** export boutiques ********/
 
-function func_export_boutiques_details() {
-	
-    if(isset($_GET['export_boutique_details'])) {
+function func_export_all_posts() {
+    if(isset($_GET['export_all_posts'])) {
         $arg = array(
-            'post_type' => 'boutiques',
+            'post_type' => 'post',
             'post_status' => 'publish',
             'posts_per_page' => -1,
         );
@@ -29,25 +30,35 @@ function func_export_boutiques_details() {
         $arr_post = get_posts($arg);
         if ($arr_post) {
   
-            header('Content-type: text/csv;charset=utf-8');
-            header('Content-Disposition: attachment; filename="boutiques-details.csv"');
+            header('Content-type: text/csv');
+            header('Content-Disposition: attachment; filename="wp-posts.csv"');
             header('Pragma: no-cache');
             header('Expires: 0');
   
             $file = fopen('php://output', 'w');
-			
-			// to solve UTF encode in Excel view 
-          
-			fputs( $file, $bom = chr(0xEF) . chr(0xBB) . chr(0xBF) );
-
   
-            fputcsv($file, array('Boutique Name','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday','Boutique Link'));
+            fputcsv($file, array('Post Title', 'URL', 'Categories', 'Tags'));
   
             foreach ($arr_post as $post) {
                 setup_postdata($post);
-                               
-				
-                fputcsv($file, array(get_the_title(),get_field('_storeopening_monday'),get_field('_storeopening_tuesday'),get_field('_storeopening_wednesday'),get_field('_storeopening_thursday'),get_field('_storeopening_friday'),get_field('_storeopening_saturday'),get_field('_storeopening_sunday'),get_the_permalink()));
+                  
+                $categories = get_the_category();
+                $cats = array();
+                if (!empty($categories)) {
+                    foreach ( $categories as $category ) {
+                        $cats[] = $category->name;
+                    }
+                }
+  
+                $post_tags = get_the_tags();
+                $tags = array();
+                if (!empty($post_tags)) {
+                    foreach ($post_tags as $tag) {
+                        $tags[] = $tag->name;
+                    }
+                }
+  
+                fputcsv($file, array(get_the_title(), get_the_permalink(), implode(",", $cats), implode(",", $tags)));
             }
   
             exit();
@@ -55,4 +66,4 @@ function func_export_boutiques_details() {
     }
 }
  
-add_action( 'init', 'func_export_boutiques_details' );
+add_action( 'init', 'func_export_all_posts' );
