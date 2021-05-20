@@ -1,3 +1,7 @@
+<?php
+
+
+/** Reference link : https://artisansweb.net/export-posts-csv-wordpress/
 
 
 /****** Create button on post listing page admin ********/
@@ -36,6 +40,10 @@ function func_export_all_posts() {
             header('Expires: 0');
   
             $file = fopen('php://output', 'w');
+            
+            /****** Added below line to solve UTF encode issue in excel ******/
+            
+            fputs( $file, $bom = chr(0xEF) . chr(0xBB) . chr(0xBF) );
   
             fputcsv($file, array('Post Title', 'URL', 'Categories', 'Tags'));
   
