@@ -1,3 +1,5 @@
+<?php
+
 / disable guternberg for posts
 add_filter('use_block_editor_for_post', '__return_false', 10);
 
@@ -51,7 +53,8 @@ return $file_types;
 add_filter('upload_mimes', 'add_file_types_to_uploads');
 // Allow SVG End
 
-//Add class in menu li
+/////////////////Add class in menu li start ///////////////////////////////////////////
+
 function add_additional_class_on_li($classes, $item, $args) {
     if(isset($args->add_li_class)) {
         $classes[] = $args->add_li_class;
@@ -67,6 +70,24 @@ function wpse156165_menu_add_class( $atts, $item, $args ) {
     $atts['class'] = $class;
     return $atts;
 }
+
+/* -------  code for calling menu //  use 'add_li_class' here '---------------- */
+
+
+
+
+		wp_nav_menu(
+		array(
+		'theme_location' => 'menu-1',
+		'menu_id'        => 'primary-menu',
+		'add_li_class'	=> 'menu__item',
+		)
+		);
+								
+/* -------  code for calling menu end  ---------------- */
+
+
+/////////////////Add class in menu li end ///////////////////////////////////////////
 
 /** Create Footer widgets start */
 function footer_section1_widgets_init() {
