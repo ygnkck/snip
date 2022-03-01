@@ -14,6 +14,35 @@
  */
 
 
+/**********custom post type , custom loop on custom page template *************/
+
+
+
+
+	global $post;
+	$args = array(
+	'post_type' => 'sdg-portfolio',
+	'post_status' => 'publish',
+	'posts_per_page'=> 9,
+	);	
+	$pl_query = new WP_Query($args);					
+	$count = 0; 
+	$delay = 100;
+        $total_posts = $pl_query->post_count;	
+
+
+	if($pl_query->have_posts()): while($pl_query->have_posts()): $pl_query->the_post();  
+
+
+	$catinfo = get_category();
+
+
+	print_r($catinfo);
+
+	
+	endwhile; endif; 
+
+
 /***** add ACF options page **********/
 
 if( function_exists('acf_add_options_page') ) {
