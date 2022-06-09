@@ -127,7 +127,7 @@ get_footer(); ?>
 
 
 /************ start file : front-end.js *****************************/
-
+<script>
 (function($) {
     jQuery(document).ready(function() {
         var cat_buttons = jQuery("li.genre");
@@ -209,14 +209,14 @@ jQuery(document).ready(function () {
             
         });
 
-
+</script>
 /************ end  file : front-end.js *****************************/
 
 
 /************ start file : functions.php   *****************************/
 
 
-
+<?php
 
 
 function register_post_type_movies(){
