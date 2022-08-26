@@ -3,8 +3,6 @@ error_reporting(E_ERROR | E_PARSE);
 $table = file_get_contents('https://www.rechtsanwaelte.at/buergerservice/servicecorner/rechtsanwalt-finden/?tx_rafinden_simplesearch%5Blid%5D=11298&tx_rafinden_simplesearch%5Baction%5D=show&tx_rafinden_simplesearch%5Bcontroller%5D=LawyerSearch&cHash=7121967595cd32a23c51845094d9471f');
 //$table = file_get_contents('https://en.wikipedia.org/wiki/Sugar_Ray_Robinson');
 
-//$table = file_get_contents('https://www.rechtsanwaelte.at/buergerservice/servicecorner/rechtsanwalt-finden/?tx_rafinden_simplesearch%5Blid%5D=6649&tx_rafinden_simplesearch%5Baction%5D=show&tx_rafinden_simplesearch%5Bcontroller%5D=LawyerSearch&cHash=c43d6a4765b19a2562518d141c939551');
-
 $dom = new DOMDocument;
 
 $dom->loadHTML($table);
